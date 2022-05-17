@@ -1,0 +1,25 @@
+%12 ЗАДАНИЕ.
+%Найти произведение таких делителей числа, сумма цифр которых меньше,чем сумма цифр исходного числа.
+
+%Функция,вычисляющая сумму цифр(используется рекурсия вниз)
+sumofdig(X,Sum):-sumofdig(X,Sum,0).
+sumofdig(0,Res,Res):-!.
+sumofdig(X,Sum,CurSum):- X1 is X mod 10,NowSum is CurSum+X1,
+    X2 is X div 10,sumofdig(X2,Sum,NowSum).
+
+%функция,вычисляющая искомое произведение
+product(X,Res):-product(X,X,Res,1),!.
+product(_,0,Res,Res):-!.
+product(X,Div,Res,CurProd):-
+    (0 is X mod Div,sumofdig(Div,Y),sumofdig(X,Z),Y<Z,
+     NewProd is CurProd*Div;NewProd is CurProd),D1 is Div-1,
+     product(X,D1,Res,NewProd).
+
+
+
+
+
+
+
+
+
