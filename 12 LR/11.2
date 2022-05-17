@@ -1,0 +1,16 @@
+%Проверка на простоту:
+primenumber(X):-primenumber(2,X).
+primenumber(X,X):-!.
+primenumber(K,X):-Ost is X mod K,Ost=0,!,fail.
+primenumber(K,X):-K1 is K+1,primenumber(K1,X).
+
+%12 ЗАДАНИЕ.
+%Выполнить указанную задачу с помощью рекурсии вверх и рекурсии вниз.
+%Найти сумму простых делителей числа.
+
+%Рекурсия вниз.
+sumofprimedivDOWN(X,Sum):-sumofprimedivDOWN(X,X,Sum,0),!.
+sumofprimedivDOWN(_,0,Sum,Sum):-!.
+sumofprimedivDOWN(X,Div,Sum,CurSum):-
+    (0 is X mod Div,primenumber(Div),NewSum is CurSum+Div;NewSum is CurSum),
+     D1 is Div-1,sumofprimedivDOWN(X,D1,Sum,NewSum).

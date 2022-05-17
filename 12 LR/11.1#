@@ -1,0 +1,11 @@
+%Проверка на простоту:
+primenumber(X):-primenumber(2,X).
+primenumber(X,X):-!.
+primenumber(K,X):-Ost is X mod K,Ost=0,!,fail.
+primenumber(K,X):-K1 is K+1,primenumber(K1,X).
+
+%11 ЗАДАНИЕ.
+%Выполнить указанную задачу с помощью рекурсии вверх и рекурсии вниз.
+%Найти сумму простых делителей числа.
+
+%Рекурс
