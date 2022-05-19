@@ -1,0 +1,29 @@
+%15 ЗАДАНИЕ.
+%Дан целочисленный массив.
+% Необходимо найти количество элементов, расположенных после последнего максимального.
+
+%Чтение списка
+read_list(0,[]):-!.
+read_list(N,[Head|Tail]):-read(Head),
+    N1 is N-1, read_list(N1,Tail).
+
+%Поиск количества элементов  после последнего максимального
+indexaftermax([H|T],Index):-indexaftermax(T,Index,0,1,H).
+indexaftermax([],Index,Index,_,_):-!.
+indexaftermax([H|T],Index,IndexMax,NowIndex,MaxEl):-
+    (H>=MaxEl,NewIndexMax is NowIndex, NewMax is H,!;
+    NewIndexMax is IndexMax,NewMax is MaxEl),
+    NewNowIndex is NowIndex+1,
+    indexaftermax(T,Index,NewIndexMax,NewNowIndex,NewMax).
+
+
+lenght_list([H|T],Len):-lenght_list([H|T],Len,0).
+lenght_list([],Len,Len):-!.
+lenght_list([_|T],Len,NowLen):-NewLen is NowLen+1,
+    lenght_list(T,Len,NewLen).
+
+
+task15:-write("Введите длину списка: "), read(Count),read_list(Count,List),
+    write("Количество элементов после последнего максимального: "),
+    lenght_list(List,Len),indexaftermax(List,IndexMax),
+    X is Len-IndexMax-1, write(X),!.
