@@ -1,0 +1,20 @@
+%14 ЗАДАНИЕ.
+%Построить предикат, получающий длину списка.
+
+%считывание списка
+read_list(A,N):-read_list([],A,0,N).
+read_list(A,A,N,N):-!.
+read_list(List,A,I,N):-	I1 is I+1,read(X),append(List,[X],List1),
+						read_list(List1,A,I1,N).
+
+%Вычисление длины списка
+%
+lenght_list([H|T],Len):-lenght_list([H|T],Len,0).
+lenght_list([],Len,Len):-!.
+lenght_list([_|T],Len,NowLen):-NewLen is NowLen+1,
+    lenght_list(T,Len,NewLen).
+
+
+%вывод списка
+write_list([]):-!.
+write_list([H|T]):-write(H),write_list(T).
