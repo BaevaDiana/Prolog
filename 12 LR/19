@@ -1,0 +1,40 @@
+%19 ЗАДАНИЕ.
+%Дан целочисленный массив и интервал a..b.
+%Необходимо найти максимальный из элементов в этом интервале.
+
+
+%Чтение списка
+read_list(0,[]):-!.
+read_list(N,[Head|Tail]):-read(Head),
+    N1 is N-1, read_list(N1,Tail).
+
+%Поиск максимамльного в интервале
+maximuminint([H|T],(A,B),Res):-(H>A,H<B,maximuminint(T,(A,B),H,Res));maximuminint(T,(A,B),Res),!.
+maximuminint([],_,Maximum,Maximum):-!.
+maximuminint([H|T],(A,B),Maximum,Res):-(H>Maximum,H<B,H>A,NewMaximum is H;NewMaximum is Maximum),
+    maximuminint(T,(A,B),NewMaximum,Res).
+
+
+
+write_list19:-write("Введите длину списка: "), read(Count),read_list(Count,List),
+    write("Введите  a: "),read(A),write("Введите b: "),read(B),
+    maximuminint(List,(A,B),Res),
+    write("Максимальный элемент в интервале: "), write(Res),!.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

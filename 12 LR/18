@@ -1,0 +1,37 @@
+%18 ЗАДАНИЕ.
+%Дан целочисленный массив и натуральный индекс (число, меньшее размера массива).
+%Необходимо определить является ли элемент по указанному индексу локальным минимумом.
+
+%Чтение списка
+read_list(0,[]):-!.
+read_list(N,[Head|Tail]):-read(Head),
+    N1 is N-1, read_list(N1,Tail).
+
+%Проверка на локальный минимум
+localmin([F,S|_],0):-F<S,!.
+localmin([F,S|T],Index):-localmin(F,S,T,Index,1).
+localmin(F,S,[],Index,Index):-S<F,!.
+localmin(F,S,[Next|_],Index,Index):-S<F,S<Next,!.
+localmin(_,S,[Next|Tail],Index,IndexNow):-NextIndex is IndexNow+1,
+    localmin(S,Next,Tail,Index,NextIndex).
+
+%Вывод списка
+write_list18:-write("Введите длину списка:"), read(Count),read_ist(Count,List),
+    write("Введите индекс"),read(Index),
+    write("Является ли элемент локальным минимумом - "),localmin(List,Index).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
