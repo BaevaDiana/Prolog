@@ -1,0 +1,27 @@
+%16 ЗАДАНИЕ.
+%Дан целочисленный массив.
+%Необходимо найти индекс минимального элемента.
+
+%Чтение списка
+read_list(0,[]):-!.
+read_list(N,[Head|Tail]):-read(Head),
+    N1 is N-1, read_list(N1,Tail).
+
+%Поиск количества элементов  после последнего максимального
+indexmin([H|T],Index):-indexmin(T,Index,0,1,H).
+indexmin([],I,I,_,_):-!.
+indexmin([H|T],Index,IndexMin,IndexNow,Min):-
+    (   H<Min,
+        Min1 is H, IndexMin1 is IndexNow;
+    Min1 is Min, IndexMin1 is IndexMin),
+    IndexNow1 is IndexNow + 1,
+    indexmin(T,Index,IndexMin1,IndexNow1,Min1).
+
+lenght_list([H|T],Len):-lenght_list([H|T],Len,0).
+lenght_list([],Len,Len):-!.
+lenght_list([_|T],Len,NowLen):-NewLen is NowLen+1,
+    lenght_list(T,Len,NewLen).
+
+
+write_list16:-write("Введите длину списка: "), read(Count),read_list(Count,List),
+    write("Индекс минимального элемента: "),indexmin(List,Index), write(Index),!.
