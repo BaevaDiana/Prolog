@@ -1,0 +1,36 @@
+%17 ЗАДАНИЕ.
+%Дан целочисленный массив.
+%Необходимо разместить элементы, расположенные до минимального, в конце массива.
+
+%Чтение списка
+read_list(0,[]):-!.
+read_list(N,[Head|Tail]):-read(Head),
+    N1 is N-1, read_list(N1,Tail).
+
+%объединение списков
+unity([],List2,List2).
+unity([H|T],List2,[H|NewList]):-unity(T,List2,NewList).
+
+%поиск индекса минимального элемента
+indexmin([H|T],Index):-indexmin(T,Index,0,1,H).
+indexmin([],I,I,_,_):-!.
+indexmin([H|T],Index,IndexMin,IndexNow,Min):-
+    (   H<Min,
+        Min1 is H, IndexMin1 is IndexNow;
+    Min1 is Min, IndexMin1 is IndexMin),
+    IndexNow1 is IndexNow + 1,
+    indexmin(T,Index,IndexMin1,IndexNow1,Min1).
+
+%List - итоговый список
+%Элементы до минимального в конец массива
+elementsbeforemin([H|T],List):-indexmin([H|T],IndexMin),
+    elementsbeforemin([H|T],List,IndexMin,0,[]).
+elementsbeforemin(L1,List,IndexMin,IndexMin,L2):-unity(L1,L2,List),!.
+elementsbeforemin([H|T],List,IndexMin,IndexNow,NowList):-NewIndex is IndexNow+1,unity(NowList,[H],NewList),
+    elementsbeforemin(T,List,IndexMin,NewIndex,NewList).
+%Вывод списка
+write_list([]) :- !.
+write_list([X|T]) :- write(X), nl, write_list(T).
+
+write_list17:- write("Введите длину списка: "), read(Count),read_list(Count,List),elementsbeforemin(List,NewList),
+    write("Новый список: "),write_list(NewList),!.
